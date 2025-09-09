@@ -28,7 +28,7 @@ export class RoomPlaylistService {
       }
     );
 
-    console.log('id', id);
+    // console.log('id', id);
 
     room_playlist_id = id;
 
@@ -37,7 +37,7 @@ export class RoomPlaylistService {
       { replacements: { id: room_playlist_id }, ...opt }
     );
 
-    console.log('rows', rows);
+    // console.log('rows', rows);
 
     // @ts-ignore
     return (rows as any[])[0];

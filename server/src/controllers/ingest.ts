@@ -6,6 +6,7 @@ import sequelize from '../database';
 import { VideoService } from '../services/video';
 import { RoomService } from '../services/room';
 import { RoomPlaylistService } from '../services/room-playlist';
+import { TagService } from '../services/tag';
 
 const bodySchema = z.object({
   nickname: z.string().min(1).max(40),
@@ -45,6 +46,13 @@ export class IngestController {
           opt
         );
 
+        if (payload.tags?.length) {
+          await TagService.createTagsForVideo(
+            { video_id: video.id, names: payload.tags },
+            opt
+          );
+        }
+
         const item = await RoomPlaylistService.create(
           {
             room_id: room.id,
@@ -63,7 +71,7 @@ export class IngestController {
 
         const roomUpdated = await RoomService.findById(room.id, opt);
 
-        return { room: roomUpdated, item, video, user };
+        return { room: roomUpdated, items: [item], videos: [video], user };
       });
 
       return res.status(201).json(result);

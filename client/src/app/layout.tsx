@@ -4,6 +4,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryProvider } from '@/providers/query-provider';
 import { cn } from '@/utils/cn';
 import '../styles/globals.css';
+import { RoomStoreProvider } from '@/providers/room-provider';
+import { SocketProvider } from '@/providers/socket-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +26,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={cn(['bg-neutral-50', inter.className])}>
         <QueryProvider>
-          <ChakraProvider>{children}</ChakraProvider>
+          <ChakraProvider>
+            <RoomStoreProvider>{children}</RoomStoreProvider>
+          </ChakraProvider>
         </QueryProvider>
       </body>
     </html>
