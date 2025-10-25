@@ -8,6 +8,7 @@ import Player from './player';
 import RoomTabs from './tabs';
 import Messages from './messages';
 import { SocketProvider } from '@/providers/socket-provider';
+import ReactPlayer from 'react-player';
 
 export default function RoomPage() {
   const router = useRouter();

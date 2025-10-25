@@ -10,7 +10,7 @@ export default function Player() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const localPlayerRef = useRef<any>(null);
+  const localPlayerRef = useRef<ReactPlayer>(null);
 
   const url = useMemo(() => {
     const v = videos?.[0];
@@ -31,12 +31,19 @@ export default function Player() {
     );
   }
 
-  console.log(localPlayerRef);
+  console.log(localPlayerRef.current?.seekTo);
 
   return (
-    <div className='group w-full h-full flex items-center justify-center relative bg-neutral-50'>
+    <div
+      className='group w-full h-full flex items-center justify-center relative bg-neutral-50'
+      style={{
+        // garanta uma altura! você pode trocar por h-[400px], etc.
+        aspectRatio: '16 / 9',
+      }}
+    >
       <ReactPlayer
-        src={url}
+        ref={localPlayerRef}
+        url={url}
         playing={true}
         width='100%'
         height='100%'
@@ -48,6 +55,7 @@ export default function Player() {
 
       <button
         type='button'
+        onClick={() => localPlayerRef.current?.seekTo(0.9999999)}
         className='absolute cursor-default inset-0 flex items-center justify-center'
       ></button>
     </div>
